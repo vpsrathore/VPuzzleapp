@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Display User Data</title>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"></script>
+</head>
+
+<body>
+    <h1>User Data</h1>
+    <p>Email: <span id="user-email"></span></p>
+
+    <p>full_name: <span id="user-full"></span></p>
+    <p>last-login: <span id="user-log"></span></p>
+    <script>
+        var config = {
+            apiKey: "AIzaSyDk9naJshG-5eRic33eoZ3KNxFO0zegxKk",
+            authDomain: "elitmus-puzzle.firebaseapp.com",
+            databaseURL: "https://elitmus-puzzle-default-rtdb.firebaseio.com",
+            projectId: "elitmus-puzzle",
+            storageBucket: "elitmus-puzzle.appspot.com",
+            messagingSenderId: "987850541018",
+            appId: "1:987850541018:web:a5ba548b5fe4003c1462e3",
+            measurementId: "G-0LQKXD8XBL"
+        };
+       
+        firebase.initializeApp(config);
+        
+        // Get the uid of the user you want to retrieve data for
+        var database = firebase.database();
+
+        // Get a reference to the users node in the database
+        var usersRef = database.ref("users");
+        console.log(usersRef)
+        // Attach a listener to read the data at our users reference
+        usersRef.on('value', function (snapshot) {
+            // Get the user data from the snapshot
+            var userData = snapshot.val();
+
+            // Display the user data on the page
+            console.log('User data:', userData);
+            document.getElementById('user-email').textContent = userData.email;
+            document.getElementById('user-full').textContent = userData.full_name;
+            document.getElementById('user-log').textContent = userData.last_login;
+        });
+        
+    </script>
+</body>
+
+</html>
